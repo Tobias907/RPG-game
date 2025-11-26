@@ -6,8 +6,16 @@ using System.Linq;
 
 namespace RPG_game
 {
+    /// <summary>
+    /// Einstiegspunkt der Anwendung und zentrale Spiellogik (Menü, Kämpfe, Inventar).
+    /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// Einstiegspunkt des RPG-Spiels. Initialisiert Spieler und Gegner
+        /// und führt die Haupt-Spielschleife mit Menüauswahl aus.
+        /// </summary>
+        /// <param name="args">Optionale Kommandozeilenargumente (werden nicht verwendet).</param>
         static void Main(string[] args)
         {
             Konsolengroesse();
@@ -281,6 +289,14 @@ namespace RPG_game
                 }
             } while (playing);
         }
+
+        /// <summary>
+        /// Öffnet ein Administrationsmenü, in dem Charakterwerte (HP, Max-HP,
+        /// Angriffsschaden, Spezial-Multiplikator, Spezialwahrscheinlichkeit)
+        /// angepasst und Potions dem Inventar hinzugefügt werden können.
+        /// </summary>
+        /// <param name="Admin_Passwort">Erwartetes Passwort für den Adminzugriff.</param>
+        /// <param name="charakter">Der Charakter, dessen Werte angepasst werden.</param>
         public static void AdminMenu(string Admin_Passwort, Charakter charakter)
         {
             bool PasswortCheck = false;
@@ -430,6 +446,11 @@ namespace RPG_game
                 ENTER();
             }
         }
+
+        /// <summary>
+        /// Liest eine Zeile von der Konsole ein und versucht, sie in einen double-Wert umzuwandeln.
+        /// </summary>
+        /// <returns>Den eingegebenen Wert als double. Bei ungültiger Eingabe ist der Wert 0.</returns>
         public static double EinlesenUndKonvertieren()
         {
             bool Konvertiert = false;
@@ -437,6 +458,13 @@ namespace RPG_game
             Konvertiert = double.TryParse(Einlesen, out double WertKonvertiert);
             return WertKonvertiert;
         }
+
+        /// <summary>
+        /// Fragt ein Passwort verdeckt (mit Sternchen) in der Konsole ab und vergleicht es
+        /// mit dem übergebenen Administrator-Passwort.
+        /// </summary>
+        /// <param name="adm_password">Passwort, das zum erfolgreichen Login benötigt wird.</param>
+        /// <returns>true, wenn das eingegebene Passwort korrekt ist; andernfalls false.</returns>
         public static bool PasswordCheck(string adm_password)
         {
             //von ChatGPT ersteller Code
@@ -465,6 +493,11 @@ namespace RPG_game
             }
             return false;
         }
+
+        /// <summary>
+        /// Versucht, die Konsolenfenster- und Buffergröße auf einen sinnvollen Wert
+        /// zu setzen, sofern das Betriebssystem und die Umgebung dies zulassen.
+        /// </summary>
         public static void Konsolengroesse()
         {
             try
@@ -538,6 +571,12 @@ namespace RPG_game
                 Console.WriteLine("Gewünschte Größe überschreitet die erlaubten Grenzen.");
             }
         }
+
+        /// <summary>
+        /// Gibt die aktuellen Werte des Charakters (HP, Schaden, Spezialwerte)
+        /// sowie das Hauptmenü mit den möglichen Aktionen aus.
+        /// </summary>
+        /// <param name="charakter">Der aktuell gesteuerte Charakter.</param>
         public static void AnfangsText(Charakter charakter)
         {
             Console.WriteLine("Playertag: " + charakter.getplayer_tag());
@@ -554,6 +593,10 @@ namespace RPG_game
             Console.WriteLine("(1) Inventar anzeigen\n(2) Goblin angreifen\n(3) Elfe angreifen" +
                 "\n(4) Werwolf angreifen\n(5) Potion verwenden\n(9) Admin Menü öffnen\n(ESC) Spiel verlassen");
         }
+
+        /// <summary>
+        /// Zeigt eine ENTER-Aufforderung an und wartet auf eine Bestätigung per Eingabetaste.
+        /// </summary>
         public static void ENTER()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -561,6 +604,16 @@ namespace RPG_game
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
         }
+
+        /// <summary>
+        /// Lässt den Spieler ein Ziel (Goblin, Elfe oder Werwolf) auswählen.
+        /// </summary>
+        /// <param name="goblin">Goblin-Instanz, die als Ziel gewählt werden kann.</param>
+        /// <param name="elfe">Elfen-Instanz, die als Ziel gewählt werden kann.</param>
+        /// <param name="werwolf">Werwolf-Instanz, die als Ziel gewählt werden kann.</param>
+        /// <returns>
+        /// Die ausgewählte Ziel-Entität oder null, wenn der Vorgang mit ESC abgebrochen wurde.
+        /// </returns>
         static Entity ChooseTarget(Entity goblin, Entity elfe, Entity werwolf)
         {
             while (true)
@@ -580,6 +633,17 @@ namespace RPG_game
                 }
             }
         }
+
+        /// <summary>
+        /// Verwendet eine Potion aus dem Inventar des Charakters.
+        /// Je nach Potion-Typ wird entweder der Charakter selbst geheilt
+        /// oder ein ausgewählter Gegner beschädigt.
+        /// </summary>
+        /// <param name="charakter">Charakter, dessen Inventar durchsucht wird.</param>
+        /// <param name="itemName">Name des Potion-Typs, der verwendet werden soll.</param>
+        /// <param name="targetIfAny">
+        /// Optionales Ziel für angreifende Potions (z. B. PoisonPotion). Für Heiltränke kann null übergeben werden.
+        /// </param>
         static void UsePotion(Charakter charakter, string itemName, Entity targetIfAny = null)
         {
             var inventar = charakter.inventar.getContainer();
