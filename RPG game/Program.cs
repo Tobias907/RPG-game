@@ -7,7 +7,7 @@ using System.Linq;
 namespace RPG_game
 {
     /// <summary>
-    /// AEinstiegspunkt der Anwendung und zentrale Spiellogik (Menü, Kämpfe, Inventar).
+    /// Einstiegspunkt der Anwendung und zentrale Spiellogik (Menü, Kämpfe, Inventar).
     /// </summary>
     internal class Program
     {
