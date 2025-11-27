@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RPG_game.Items.Potions
+namespace RPG_game
 {
     /// <summary>
     /// Schadenspotion, die einer Entität Lebenspunkte entzieht.
