@@ -24,7 +24,6 @@ namespace RPG_game
         /// Erstellt eine neue Entität mit Standardwerten für Lebenspunkte und Angriffsschaden.
         /// </summary>
         /// <param name="_namen">Name der Entität, der angezeigt werden soll.</param>
-
         public Entity(string _namen)
         {
             Name = _namen;
