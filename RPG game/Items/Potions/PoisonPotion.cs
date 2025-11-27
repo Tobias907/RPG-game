@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RPG_game
 {
     /// <summary>
-    /// Schadenspotion, die einer Entität Lebenspunkte entzieht.
+    /// ASchadenspotion, die einer Entität Lebenspunkte entzieht.
     /// </summary>
     internal class PoisonPotion : Potion
     {
